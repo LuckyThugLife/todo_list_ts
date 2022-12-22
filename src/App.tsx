@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import './App.css';
 import {Todolist} from "./Todolist";
+export type FilterValueType = "All"|"Active"|"Completed"
 
 
 function App() {
@@ -20,9 +21,21 @@ function App() {
        setTasks(filteredTasks)
     }
 
+    let [filter, setFilter] = useState<FilterValueType>( "All")
+let taskForTodoList = tasks
+    if (filter==="Active"){
+        taskForTodoList = tasks.filter(t=>t.isDone===false)
+    }
+    if (filter==="Completed"){
+        taskForTodoList = tasks.filter(t=>t.isDone===true)
+    }
+
+    const changeFilter = (value:FilterValueType) => {
+      setFilter(value)
+    }
     return (
         <div className="App">
-           <Todolist title={title}  tasks={tasks} removeTask={removeTask}/>
+           <Todolist title={title}  tasks={taskForTodoList} removeTask={removeTask} changeFilter={changeFilter}/>
         </div>
     );
 }
