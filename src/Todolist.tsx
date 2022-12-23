@@ -68,7 +68,7 @@ export const Todolist = (props: TodolistPropsType) => {
                 })}
             </ul>
             <div>
-                <button onClick={onAllClickHandler}>All</button>
+                <button onClick={onAllClickHandler}>Alls</button>
                 <button onClick={onActiveClickHandler}>Active</button>
                 <button onClick={onCompletedClickHandler}>Completed</button>
             </div>
