@@ -56,7 +56,9 @@ let taskForTodoList = tasks
                      removeTask={removeTask}
                      changeFilter={changeFilter}
                      addTask={addTask}
-                     changeTaskStatus={changeTaskStatus}/>
+                     changeTaskStatus={changeTaskStatus}
+           filter={filter}/>
+
         </div>
     );
 }

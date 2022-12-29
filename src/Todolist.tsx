@@ -1,6 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react"
 import {FilterValueType} from "./App";
-import {log} from "util";
+
 
 type TaskType = {
     id: string
@@ -15,6 +15,7 @@ type TodolistPropsType = {
     changeFilter:(value:FilterValueType)=>void
     addTask:(title:string)=>void
     changeTaskStatus:(id: string, isDone: boolean)=>void
+    filter:FilterValueType
 }
 
 export const Todolist = (props: TodolistPropsType) => {
@@ -82,9 +83,9 @@ export const Todolist = (props: TodolistPropsType) => {
                 })}
             </ul>
             <div>
-                <button onClick={onAllClickHandler}>Alls</button>
-                <button onClick={onActiveClickHandler}>Active</button>
-                <button onClick={onCompletedClickHandler}>Completed</button>
+                <button onClick={onAllClickHandler} className={props.filter === 'All' ? 'active-filter' : ''}>All</button>
+                <button onClick={onActiveClickHandler}  className={props.filter === 'Active' ? 'active-filter' : ''}>Active</button>
+                <button onClick={onCompletedClickHandler} className={props.filter === 'Completed' ? 'active-filter' : ''}>Completed</button>
             </div>
         </div>
     )
