@@ -10,13 +10,11 @@ import {Menu} from "@mui/icons-material";
 export type FilterValueType = "All" | "Active" | "Completed"
 export type TodoListsType = { id: string, title: string, filter: FilterValueType }
 
-type TaskStateType = {
+export type TasksStateType = {
     [key: string]: Array<TaskType>
 }
 
-
 function App() {
-
 
     let todolistID1 = v1()
     let todolistID2 = v1()
@@ -26,7 +24,37 @@ function App() {
         {id: todolistID2, title: 'What to buy', filter: "All"},
     ])
 
-    let [tasks, setTasks] = useState<TaskStateType>({
+    const removeTodolist = (id: string) => {
+        setTodolists(todolists.filter(todolist => todolist.id !== id))
+        delete tasks[id]
+
+        setTasks({...tasks})
+    }
+
+    function addTodolist(title: string) {
+        let newTodolistId = v1()
+        let newTodolist: TodoListsType = {id: newTodolistId, title: title, filter: "All"}
+        setTodolists([newTodolist, ...todolists])
+        setTasks({...tasks, [newTodolistId]: []})
+    }
+
+    const changeTodolistTitle = (id: string, newTitle: string) => {
+        const todolist = todolists.find(tl => tl.id === id)
+        if (todolist) {
+            todolist.title = newTitle
+            setTodolists([...todolists])
+        }
+    }
+
+    const changeTodolistFilter = (value: FilterValueType, todolistId: string) => {
+        let todolist = todolists.find(tl => tl.id === todolistId)
+        if (todolist) {
+            todolist.filter = value
+            setTodolists([...todolists])
+        }
+    }
+
+    let [tasks, setTasks] = useState<TasksStateType>({
         [todolistID1]: [
             {id: v1(), title: 'HTML&CSS', isDone: true},
             {id: v1(), title: 'JS', isDone: true},
@@ -44,21 +72,11 @@ function App() {
         ]
     })
 
-    const removeTodolist = (id: string) => {
-        setTodolists(todolists.filter(todolist => todolist.id !== id))
-        delete tasks[id]
-
+    function removeTask(id: string, todolistId: string) {
+        let todolistTasks = tasks[todolistId]
+        tasks[todolistId] = todolistTasks.filter(task => task.id !== id)
         setTasks({...tasks})
     }
-
-    const changeTodolistTitle = (id: string, newTitle: string) => {
-        const todolist = todolists.find(tl => tl.id === id)
-        if (todolist) {
-            todolist.title = newTitle
-            setTodolists([...todolists])
-        }
-    }
-
 
     const addTask = (title: string, todolistId: string) => {
 
@@ -67,21 +85,6 @@ function App() {
         tasks[todolistId] = [task, ...todolistTasks]
         setTasks({...tasks})
 
-    }
-
-
-    function removeTask(id: string, todolistId: string) {
-        let todolistTasks = tasks[todolistId]
-        tasks[todolistId] = todolistTasks.filter(task => task.id !== id)
-        setTasks({...tasks})
-    }
-
-    const changeFilter = (value: FilterValueType, todolistId: string) => {
-        let todolist = todolists.find(tl => tl.id === todolistId)
-        if (todolist) {
-            todolist.filter = value
-            setTodolists([...todolists])
-        }
     }
 
     function changeTaskStatus(id: string, isDone: boolean, todolistId: string) {
@@ -100,13 +103,6 @@ function App() {
             task.title = newTitle
         }
         setTasks({...tasks})
-    }
-
-    function addTodolist(title: string) {
-        let newTodolistId = v1()
-        let newTodolist: TodoListsType = {id: newTodolistId, title: title, filter: "All"}
-        setTodolists([newTodolist, ...todolists])
-        setTasks({...tasks, [newTodolistId]: []})
     }
 
     return (
@@ -153,7 +149,7 @@ function App() {
                                     title={todolist.title}
                                     tasks={taskForTodolist}
                                     removeTask={removeTask}
-                                    changeFilter={changeFilter}
+                                    changeFilter={changeTodolistFilter}
                                     addTask={addTask}
                                     changeTaskStatus={changeTaskStatus}
                                     changeTaskTitle={changeTaskTitle}
