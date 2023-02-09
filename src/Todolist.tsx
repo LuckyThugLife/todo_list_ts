@@ -22,7 +22,7 @@ export type TodolistPropsType = {
     removeTask:(taskId:string,todolistId: string)=> void
     changeFilter:(value:FilterValueType,todolistId: string)=>void
     addTask:(title:string,todolistId: string)=>void
-    changeTaskStatus:(id: string, isDone: boolean,todolistId: string)=>void
+    changeTaskStatus:(todolistId: string, id: string, isDone: boolean)=>void
     changeTaskTitle:(id: string, newTitle:string,todolistId: string)=>void
     filter:FilterValueType
     id: string
@@ -59,7 +59,7 @@ export const Todolist = (props: TodolistPropsType) => {
     }*/
 
     const addTask = (title:string  ) => {
-    props.addTask(title, props.id)
+    props.addTask(props.id,title)
     }
 
 
@@ -107,7 +107,7 @@ export const Todolist = (props: TodolistPropsType) => {
                     const onClickHandler = ()=>props.removeTask(t.id,props.id)
                     const onChangeStatusHandler = (e:ChangeEvent<HTMLInputElement>)=> {
                         let newIsDoneValue = e.currentTarget.checked
-                        props.changeTaskStatus(t.id, newIsDoneValue, props.id)
+                        props.changeTaskStatus(props.id, t.id,newIsDoneValue)
                     }
                     const onChangeTitleHandler = (newValue:string)=> {
 
