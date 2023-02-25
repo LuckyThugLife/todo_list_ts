@@ -1,10 +1,10 @@
 import React, {useCallback} from "react"
 import {FilterValueType} from "./App";
 import AddItemForm from "./AddItemForm";
-import EditableSpan from "./EditableSpan";
 import {Button, IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import {Task} from "./Task";
+import {EditableSpan} from "./EditableSpan";
 
 
 export type TaskType = {
@@ -63,7 +63,7 @@ export const Todolist = React.memo(function (props: TodolistPropsType) {
 
     return (
         <div>
-            <h3> <EditableSpan title={props.title} onChange={changeTodolistTitle}/>
+            <h3> <EditableSpan value={props.title} onChange={changeTodolistTitle}/>
                 <IconButton aria-label="delete"
                             onClick={removeTodolist}>
                     <Delete />

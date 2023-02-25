@@ -1,9 +1,9 @@
 import React, {ChangeEvent, useCallback} from "react";
 import Checkbox from "@mui/material/Checkbox";
-import EditableSpan from "./EditableSpan";
 import {IconButton} from "@mui/material";
 import {Delete} from "@mui/icons-material";
 import {TaskType} from "./Todolist";
+import {EditableSpan} from "./EditableSpan";
 
 type TaskPropsType = {
     removeTask: (taskId: string, todolistId: string) => void
@@ -31,7 +31,7 @@ export const Task = React.memo((props: TaskPropsType) => {
                       color={"primary"}
                       onChange={onChangeStatusHandler}/>
 
-            <EditableSpan title={props.task.title} onChange={onChangeTitleHandler}/>
+            <EditableSpan value={props.task.title} onChange={onChangeTitleHandler}/>
 
             <IconButton aria-label="delete"
                         onClick={onClickHandler}>
